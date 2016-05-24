@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="title_bar_right_text_bg_normal">#00000000</color>
+    <color name="title_bar_right_text_bg_pressed">#ff101213</color>
+    <color name="white">#ffffff</color>
+
+
+    <!--background-->
+    <color name="bg_e3e3e3">#e3e3e3</color>
+    <color name="bg_e8e8e8">#e8e8e8</color>
+    <color name="bg_white_50">#80ffffff</color>
+    <color name="bg_common">#f7f7f7</color>
+    <color name="bg_2e2e2e">#2e2e2e</color>
+    <color name="bg_2e2e2e_6">#0f2e2e2e</color>
+    <color name="bg_edit">#e6e6e6</color>
+    <color name="bg_dark_cover">#772e2e2e</color>
+    <color name="bg_dark_171717">#171717</color>
+    <color name="bg_black_cover">#cc000000</color>
+    <color name="bg_rank_list_tab">#EEEEEE</color>
+    <color name="bg_black_90">#e6000000</color>
+    <color name="bg_black_80">#cc000000</color>
+    <color name="bg_black_70">#b3000000</color>
+    <color name="bg_follow_selected">#eeeeee</color>
+    <color name="bg_user_dialog_home_pager">#f3ebdc</color>
+    <color name="bg_orange">#e67102</color>
+    <color name="bg_red_point">#ef4947</color>
+    <color name="bg_text_slide_button_off">#d9d9d9</color>
+    <color name="bg_text_slide_button_off_b">#bababa</color>
+    <color name="bg_text_slide_button_off_c">#6e6e6e</color>
+    <color name="bg_text_slide_button_on">#ff9f21</color>
+    <color name="bg_live_card">#992e2e2e</color>
+    <color name="bg_live_card_follow">#ccffffff</color>
+    <color name="bg_live_end_cover">#77000000</color>
+    <color name="bg_link_video">#33ffffff</color>
+    <color name="bg_top_tips">#ffff8382</color>
+    <color name="bg_chips_header">#1a2e2e2e</color>
+    <color name="bg_gift">#cc000000</color>
+    <color name="orange">#ff9f21</color>
+    <!--text-->
+    <color name="text_f14a48">#f14a48</color>
+    <color name="text_f949ac">#f949ac</color>
+    <color name="text_484848">#484848</color>
+    <color name="text_929292">#929292</color>
+    <color name="text_03b05b">#03b05b</color>
+    <color name="text_normal">#2e2e2e</color>
+    <color name="text_normal_484848">#484848</color>
+    <color name="text_normal_sub">#772e2e2e</color>
+    <color name="text_normal_30">#4d2e2e2e</color>
+    <color name="text_normal_40">#662e2e2e</color>
+    <color name="text_normal_50">#7f2e2e2e</color>
+    <color name="text_normal_60">#9a2e2e2e</color>
+    <color name="text_normal_70">#b32e2e2e</color>
+    <color name="text_normal_80">#cc2e2e2e</color>
+    <color name="text_disabled">#332e2e2e</color>
+    <color name="bg_light_grey">#192e2e2e</color>
+    <color name="text_income_space">#ededed</color>
+    <color name="text_discount">#b78500</color>
+    <color name="red">#FF0000</color>
+
+    <color name="splitter">#332e2e2e</color>
+    <color name="dialog_gray">#ededed</color>
+    <color name="line_color">#585858</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_60">#9affffff</color>
+    <color name="color_ededed">#ededed</color>
+    <color name="user_info_bg">#F7F7F7</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000</color>
+    <color name="white_92">#eaffffff</color>
+    <color name="border_orange">#fe9e20</color>
+
+    <color name="text_first_place">#eb72b5</color>
+    <color name="text_second_place">#f67c7b</color>
+    <color name="text_third_place">#fca757</color>
+
+    <color name="gift_count_1">#00c200</color>
+    <color name="gift_count_2">#009cff</color>
+    <color name="gift_count_3">#ec587c</color>
+    <color name="gift_count_4">#b54cff</color>
+    <color name="gift_count_5">#ffcc00</color>
+    <color name="yellow_66c">#e0b66c</color>
+    <color name="text_gift_name">#ffdda0</color>
+    <color name="text_user_notice">#f5c571</color>
+    <color name="text_user_notice_confirm">#2f2f2e</color>
+
+    <color name="setting_but_back">#dddddd</color>
+    <color name="setting_but">#f7f7f7</color>
+</resources>
