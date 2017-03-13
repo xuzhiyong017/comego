@@ -1,0 +1,163 @@
+[
+    {
+        "outputFile": "G:\\ada\\android\\trunk\\library\\fw\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 40,
+                    "endOffset": 91
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\build\\intermediates\\exploded-aar\\com.android.databinding\\library\\1.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 40,
+                        "endOffset": 91
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 96,
+                    "endColumn": 56,
+                    "endOffset": 148
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\build\\intermediates\\exploded-aar\\com.android.databinding\\adapters\\1.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 56,
+                        "endOffset": 107
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 153,
+                    "endColumn": 42,
+                    "endOffset": 191
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\build\\intermediates\\exploded-aar\\com.android.databinding\\adapters\\1.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 112,
+                        "endColumn": 42,
+                        "endOffset": 150
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 196,
+                    "endColumn": 40,
+                    "endOffset": 232
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\build\\intermediates\\exploded-aar\\com.android.databinding\\adapters\\1.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 155,
+                        "endColumn": 40,
+                        "endOffset": 191
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 237,
+                    "endColumn": 39,
+                    "endOffset": 272
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 17,
+                        "endColumn": 39,
+                        "endOffset": 52
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 277,
+                    "endColumn": 70,
+                    "endOffset": 343
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 57,
+                        "endColumn": 70,
+                        "endOffset": 123
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 348,
+                    "endLine": 14,
+                    "endColumn": 12,
+                    "endOffset": 636
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 186,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 474
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 641,
+                    "endLine": 17,
+                    "endColumn": 12,
+                    "endOffset": 800
+                },
+                "from": {
+                    "file": "G:\\ada\\android\\trunk\\library\\fw\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 512,
+                        "endLine": 17,
+                        "endColumn": 12,
+                        "endOffset": 671
+                    }
+                }
+            }
+        ]
+    }
+]
