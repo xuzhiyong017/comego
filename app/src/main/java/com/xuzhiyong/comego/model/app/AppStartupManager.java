@@ -4,24 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.duowan.ada.R;
-import com.duowan.ada.module.DEvent;
-import com.duowan.ada.module.datacenter.tables.JUserInfo;
-import com.duowan.ada.module.login.LoginHelper;
-import com.duowan.ada.ui.main.MainActivity;
-import com.duowan.ada.ui.main.SplashActivity;
-import com.duowan.ada.ui.utils.ActivityIntentKey;
-import com.duowan.ada.ui.utils.ActivityUtils;
 import com.duowan.fw.Module;
 import com.duowan.fw.util.JStringUtils;
+import com.xuzhiyong.comego.R;
+import com.xuzhiyong.comego.ui.main.MainActivity;
+import com.xuzhiyong.comego.ui.main.SplashActivity;
+import com.xuzhiyong.comego.ui.utils.ActivityIntentKey;
 
-import protocol.UserInfoFlags;
 import rx.Observable;
 import rx.Observable.OnSubscribe;
 import rx.Subscriber;
 
 /**
- * Created by xiehao on 16-4-6.
+ * Created by xuzhiyong on 16-4-6.
  */
 class AppStartupManager {
     // FIXME: 16-10-25
@@ -137,9 +132,8 @@ class AppStartupManager {
 
     private boolean showUpdateUserInfo() {
         // FIXME: 16-11-2
-        int flags = JUserInfo.info(LoginHelper.getUid()).flags.getValue();
-        return ( flags & UserInfoFlags.UserInfoFlags_NotUserInfo_VALUE)
-                == UserInfoFlags.UserInfoFlags_NotUserInfo_VALUE;
+
+        return false;
     }
     private void handleStartUri() {
     }

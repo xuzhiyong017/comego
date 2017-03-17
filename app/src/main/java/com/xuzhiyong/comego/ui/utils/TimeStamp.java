@@ -3,9 +3,9 @@ package com.xuzhiyong.comego.ui.utils;
 import android.text.TextUtils;
 import android.text.format.Time;
 
+import com.duowan.ada.R;
 import com.duowan.fw.Module;
 import com.duowan.fw.util.JLog;
-import com.duowan.ada.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

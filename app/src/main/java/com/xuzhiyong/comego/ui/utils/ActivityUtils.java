@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.duowan.ada.R;
-import com.duowan.ada.ui.base.GToast;
 import com.duowan.fw.ThreadBus;
 import com.duowan.fw.util.JStringUtils;
+import com.xuzhiyong.comego.R;
 
 /***
  * 
@@ -226,7 +225,7 @@ public class ActivityUtils {
             ThreadBus.bus().post(ThreadBus.Main, new Runnable() {
                 @Override
                 public void run() {
-                    GToast.show(R.string.market_not_found);
+//                    GToast.show(R.string.market_not_found);
                 }
             });
         }

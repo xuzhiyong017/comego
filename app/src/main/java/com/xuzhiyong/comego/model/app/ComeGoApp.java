@@ -9,6 +9,7 @@ import com.duowan.fw.root.BaseApp;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JUtils;
 import com.squareup.leakcanary.LeakCanary;
+import com.xuzhiyong.comego.model.analysis.UncaughtExceptionHandler;
 
 /**
  * Created by 91299 on 2017/3/12   0012.
@@ -41,6 +42,8 @@ public class ComeGoApp extends BaseApp {
 
         //check memory leak
         LeakCanary.install(this);
+
+        ComegoStartup.startUp(this);
 
         do_registerComponentCallbacks();
 

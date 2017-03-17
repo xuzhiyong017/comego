@@ -7,10 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.duowan.ada.module.AdaConfig;
-import com.duowan.ada.module.DData;
-import com.duowan.ada.module.DEvent;
-import com.duowan.ada.module.analysis.StatsHelper;
 import com.duowan.fw.FwEvent;
 import com.duowan.fw.FwEvent.EventArg;
 import com.duowan.fw.FwEventAnnotation;
@@ -24,6 +20,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.okhttp.OkHttpClient;
+import com.xuzhiyong.comego.model.ComegoConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -75,7 +72,7 @@ public class AppModule extends Module implements AppInterface {
             @Override
             public void run() {
                 // server config
-                AdaConfig.syncConfigFromServer();
+                ComegoConfig.syncConfigFromServer();
             }
         }, 5000);
     }
@@ -155,10 +152,10 @@ public class AppModule extends Module implements AppInterface {
             case ActivityStateOnCreate:
                 break;
             case ActivityStateOnResume:
-                StatsHelper.onResume(activity);
+//                StatsHelper.onResume(activity);
                 break;
             case ActivityStateOnPause:
-                StatsHelper.onPause(activity);
+//                StatsHelper.onPause(activity);
             case ActivityStateOnStop:
             case ActivityStateOnDestroy:
                 break;

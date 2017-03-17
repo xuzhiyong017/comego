@@ -17,7 +17,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 @KeepAnnotation
-public class AdaConfig {
+public class ComegoConfig {
 
     @KeepAnnotation
     public static class ConfigAccountType{

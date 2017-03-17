@@ -1,6 +1,5 @@
 package com.xuzhiyong.comego.ui.utils;
 
-import com.duowan.ada.ui.video.recorder.VideoRecordActivity;
 
 public class ActivityIntentKey {
 	
@@ -20,10 +19,6 @@ public class ActivityIntentKey {
 
     public static final String PHONE_NUMBER = "mobile_phone_number"; // String
 
-    /**
-     * @see VideoRecordActivity
-     */
-    public static final String VIDEO_RECORD_PARMA_KEY = "video_record_param_key"; // String
 
 	//跳转到多个tab页的activity时，先初始化的index
 	public static final String FIRST_INIT_PAGE_INDEX = "first_init_page_index";  //int

@@ -5,7 +5,6 @@ import android.os.Looper;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JUtils;
 import com.duowan.fw.util.LogToES;
-import com.duowan.ada.module.DModule;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,7 +39,6 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         //start
         final Runnable task = new Runnable() {
             public void run() {
-                DModule.ModuleAnalysis.cast(AnalysisInterface.class).reportCrash(throwable);
                 if (dueh != null) {
                     dueh.uncaughtException(thread, throwable);
                 }

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">comego</string>
 
+    <string name="empty_str"></string>
+    <string name="app_host">com.xuzhiyong.comego</string>
+    <string name="app_scheme">comego</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
