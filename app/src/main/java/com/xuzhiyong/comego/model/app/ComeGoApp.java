@@ -1,27 +1,18 @@
 package com.xuzhiyong.comego.model.app;
 
+import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.multidex.MultiDex;
-
-import com.duowan.fw.root.BaseApp;
-import com.duowan.fw.util.JLog;
-import com.duowan.fw.util.JUtils;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by 91299 on 2017/3/12   0012.
  */
 
-public class ComeGoApp extends BaseApp {
+public class ComeGoApp extends Application {
 
     @Override
     public void onCreate() {
-
-        if(JUtils.isRemoteProcess(this)){
-            return;
-        }
 
         super.onCreate();
 
@@ -32,20 +23,12 @@ public class ComeGoApp extends BaseApp {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     private void initApp() {
         long initStart = System.currentTimeMillis();
-        JLog.info(this, "init app start");
-
-        //check memory leak
-        LeakCanary.install(this);
 
         do_registerComponentCallbacks();
-
-        JLog.info(this, "init app end time : " + (System.currentTimeMillis() - initStart));
-
 
     }
 
@@ -56,7 +39,6 @@ public class ComeGoApp extends BaseApp {
             public void onLowMemory() {
                 // clear the memory cache
                 // TODO: 2016/3/28  clear memory image cache hear
-                JLog.info(this, "onLowMemory: clear the image memory cache");
             }
 
             @Override
