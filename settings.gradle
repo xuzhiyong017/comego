@@ -1,2 +1,3 @@
+include ':library:fw'
 include ':app'
 include ':app:fw'

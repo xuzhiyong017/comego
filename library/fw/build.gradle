@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25'
+
+    //compile sdk在23或者以上要加这一句
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs 'src/main/libs'
+            jni.srcDirs = []
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    //databinding开启后，会自动引入一个21.0.3版本的v4，为了不和自己的v4冲突
+    compile 'com.android.support:support-v4:25.0.0'
+}
