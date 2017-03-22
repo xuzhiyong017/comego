@@ -2,8 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'android'
+            keyPassword 'xuzhiyong'
+            storeFile file('/Users/admin/AndroidStudioProjects/comego/keystore.jks')
+            storePassword 'xuzhiyong'
+        }
+    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.xuzhiyong.comego"
         minSdkVersion 16
@@ -21,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
@@ -31,23 +39,18 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.0'
-
+    compile 'com.squareup.wire:wire-runtime:1.5.1'
     testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:23.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
-    compile ('com.facebook.fresco:fresco:0.10.0') {
+    compile('com.facebook.fresco:fresco:0.10.0') {
         exclude(module: "support-v4")
         exclude(module: "android-support-v4")
     }
-    compile ('com.facebook.fresco:imagepipeline-okhttp:0.10.0') {
+    compile('com.facebook.fresco:imagepipeline-okhttp:0.10.0') {
         exclude(module: "support-v4")
         exclude(module: "android-support-v4")
     }
-
     compile('com.facebook.fresco:animated-webp:0.10.0') {
         exclude(module: "support-v4")
         exclude(module: "android-support-v4")

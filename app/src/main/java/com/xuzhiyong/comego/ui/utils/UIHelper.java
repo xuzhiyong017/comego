@@ -7,12 +7,10 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -29,8 +26,6 @@ import com.duowan.fw.ThreadBus;
 import com.duowan.fw.util.JFileUtils;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JStringUtils;
-import com.duowan.fw.util.JVer;
-import com.duowan.fw.util.JVersionUtil;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -41,11 +36,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 /**
  * ui的一些辅助方法
@@ -264,7 +256,7 @@ public class UIHelper {
 	public static void hideKeyboard(View view) {
 		try {
 			InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		} catch (NullPointerException exception) {
 			JLog.error(null, "InputMethodManager can't find focus");
 		}
@@ -283,41 +275,4 @@ public class UIHelper {
 	}
 
 
-	public static void loadFromFile(Activity activity, String path, ImageView imageView) {
-//        Glide.with(activity).load(new File(path)).asBitmap().diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable
-// .img_default).into(imageView);
-
-	}
-
-	/**
-	 * 获取系统所有图片路径
-	 *
-	 * @param context
-	 * @return
-	 */
-	public static List<String> getAllPhotoPaths(Context context) {
-		List<String> photos = new ArrayList<>();
-		Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-				new String[]{MediaStore.Images.ImageColumns.DATA}, MediaStore.Images.ImageColumns.SIZE + ">5120", //所有照片屏蔽5k以下照片
-				// (防垃圾空图)
-				null, MediaStore.Images.ImageColumns.DATE_MODIFIED + " DESC");
-		if (null != cursor) {
-			while (cursor.moveToNext()) {
-				int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-				if (index > -1) {
-					String path = cursor.getString(index);
-					photos.add(path);
-				}
-			}
-			cursor.close();
-		}
-		return photos;
-	}
-
-	public static final Pattern SPLASH_URL_SIZE_REGEX, LOGO_URL_REGEX;
-
-	static {
-		SPLASH_URL_SIZE_REGEX = Pattern.compile("^(http://)(\\S+)(/)(\\S+)(\\.)([0-9]+)(\\*)([0-9]+)(\\.jpg|\\.png)$");
-		LOGO_URL_REGEX = Pattern.compile("^(http://)(\\S+)(/)(more_logo_\\d_\\d_\\d_)(\\S+)(_)([0-9]+)(x)([0-9]+)(\\.jpg|\\.png)$");
-	}
 }

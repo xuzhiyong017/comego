@@ -5,4 +5,20 @@ package com.xuzhiyong.comego.model.user;
  */
 
 public class UserInfo {
+
+    public long uid;
+    public String nick;
+    public String signature;
+    public String logourl;
+    public int sex;
+    public String birthday;
+    public String location;
+    public String address;
+    public String createtime;
+    public int roletype;
+    public String loginTime;
+    public int accountType;
+    public int flags;
+    public String mobilephone;
+    public String extendJson;
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="ts_a_m">上午</string>
+    <string name="ts_p_m">下午</string>
+    <string name="ts_night">晚上</string>
+    <string name="ts_yesterday">昨天</string>
+    <string name="ts_year_before">年前</string>
+    <string name="ts_month_before">个月前</string>
+    <string name="ts_day_before">天前</string>
+    <string name="ts_hour_before">小时前</string>
+    <string name="ts_minute_before">分钟前</string>
+    <string name="ts_just_before">刚刚</string>
+
+</resources>
