@@ -6,10 +6,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.webkit.URLUtil;
 
+
 import com.duowan.fw.util.JFileUtils;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JStringUtils;
-import com.xuzhiyong.comego.module.DModule;
 
 import java.io.File;
 
