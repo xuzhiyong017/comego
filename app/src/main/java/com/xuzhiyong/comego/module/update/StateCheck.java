@@ -1,5 +1,4 @@
 package com.xuzhiyong.comego.module.update;
-
 import com.duowan.fw.FwEvent.EventArg;
 
 class StateCheck implements IState {
@@ -17,7 +16,7 @@ class StateCheck implements IState {
         UpdateEvent.Event event = UpdateEvent.Event.class.cast(eventArg.event);
         switch (event) {
             case download:
-//                update.download();
+                update.download();
                 break;
             default:
                 break;

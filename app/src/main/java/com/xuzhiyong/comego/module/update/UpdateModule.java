@@ -23,10 +23,10 @@ import com.duowan.fw.util.JStringUtils;
 import com.duowan.fw.util.JTimeUtils;
 import com.duowan.fw.util.JVer;
 import com.duowan.fw.util.JVersionUtil;
-
 import com.duowan.jni.JBsDiffTool;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.mozillaonline.providers.downloads.Downloads;
 import com.xuzhiyong.comego.module.DData;
 import com.xuzhiyong.comego.module.DEvent;
 import com.xuzhiyong.comego.module.DModule;
@@ -35,6 +35,9 @@ import com.xuzhiyong.comego.module.URLHelper;
 import com.xuzhiyong.comego.module.analysis.StatsConst;
 import com.xuzhiyong.comego.module.analysis.StatsHelper;
 import com.xuzhiyong.comego.module.download.DownloadHelper;
+import com.xuzhiyong.comego.module.download.DownloadInterface;
+import com.xuzhiyong.comego.module.download.DownloadSetup;
+import com.xuzhiyong.comego.module.update.UpdateInterface;
 import com.xuzhiyong.comego.service.LocalService;
 
 import java.io.BufferedReader;
@@ -137,7 +140,7 @@ public class UpdateModule extends Module implements UpdateInterface {
             // FIXME: 16-10-25
 //            GToast.show(R.string.login_failed_oldversion);
 //            FloatManager.getInstance().showFloatView(R.string.login_failed_oldversion);
-//            updateVersionData(false);
+            updateVersionData(false);
         }
     }
 
@@ -151,7 +154,60 @@ public class UpdateModule extends Module implements UpdateInterface {
                 LocalService.Local_Op_CheckUpdate);
     }
 
+    /// public
+    @Override
+    public void updateVersionData(final boolean autoCheck) {
+        if (autoCheck && (JConstant.debuggable || JVersionUtil.getLocalNameOrigin(gMainContext).endsWith("SNAPSHOT"))) {
+            return;
+        }
 
+        ThreadBus.bus().callThreadSafe(ThreadBus.Working, new Runnable() {
+            @Override
+            public void run() {
+                mCurrentState.handleEvent(UpdateModule.this, buildEvent(UpdateEvent.Event.check_update, autoCheck));
+            }
+        });
+    }
+
+    @Override
+    public void fullDownload() {
+        ThreadBus.bus().callThreadSafe(ThreadBus.Working, new Runnable() {
+            @Override
+            public void run() {
+                mCurrentState.handleEvent(UpdateModule.this, buildEvent(UpdateEvent.Event.full_download, mFullPkgUrl));
+            }
+        });
+    }
+
+    @Override
+    public String getPatchNote() {
+        return (null != mUpdateData && null != mUpdateData.description) ? mUpdateData.description : "";
+    }
+
+    @Override
+    public String getVersion() {
+        return null == mVersion ? "" : mVersion;
+    }
+
+    @Override
+    public void downloadPatch() {
+        ThreadBus.bus().callThreadSafe(ThreadBus.Working, new Runnable() {
+            @Override
+            public void run() {
+                mCurrentState.handleEvent(UpdateModule.this, buildEvent(UpdateEvent.Event.download));
+            }
+        });
+    }
+
+    @Override
+    public void ignore() {
+        ThreadBus.bus().callThreadSafe(ThreadBus.Working, new Runnable() {
+            @Override
+            public void run() {
+                idle(StatsConst.UPDATE_USER_CANCEL, null);
+            }
+        });
+    }
 
     /// package
     void checkUpdate(final boolean autoCheck) {
@@ -178,8 +234,86 @@ public class UpdateModule extends Module implements UpdateInterface {
                 });
     }
 
+    void download() {
+        setCurrentState(States.state(States.download));
 
+        String fileName = null == mPatch ? DEFAULT_APK_PREFIX + mUpdateData.version + DEFAULT_APK_SUFFIX :
+                DEFAULT_PATCH_NAME + mPatch.patchInfo.patch_version + "_" + mUpdateData.version + DEFAULT_PATCH_SUFFIX;
+        String uri = null == mPatch ? mUpdateData.url : mPatch.patchInfo.patch_url;
+        long requestId = DownloadHelper.addDownloadTask(uri, fileName, DownloadHelper.getDownloadFolder(DEFAULT_FOLDER));
+        if (requestId > 0L) {
+            onDownloadStarted(requestId);
+        } else {
+            UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Download, requestId);
+            idle(StatsConst.UPDATE_DOWNLOAD_FAILED, StatsConst.DOWNLOAD_FAILED_CODE + requestId);
+        }
+    }
 
+    void downloadApk(String url) {
+        if (TextUtils.isEmpty(url) || TextUtils.isEmpty(mVersion)) {
+            return;
+        }
+
+        setCurrentState(States.state(States.download));
+        String fileName = DEFAULT_APK_PREFIX + mVersion + DEFAULT_APK_SUFFIX;
+        String filePath = DownloadHelper.getDownloadFolder(DEFAULT_FOLDER) + "/" + fileName;
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+
+        long requestId = DownloadHelper.addDownloadTask(url, fileName, DownloadHelper.getDownloadFolder(DEFAULT_FOLDER));
+        if (requestId > 0L) {
+            onDownloadStarted(requestId);
+        } else {
+            UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Download, requestId);
+            idle(StatsConst.UPDATE_DOWNLOAD_FAILED, StatsConst.DOWNLOAD_FAILED_CODE + requestId);
+        }
+
+    }
+
+    void applyDownload(DownloadSetup.JDownloadInfo info) {
+        if (null == mPatch) {
+            setCurrentState(States.state(States.install));
+            mCurrentState.handleEvent(this, buildEvent(UpdateEvent.Event.install, info.mHint));
+            return;
+        }
+
+        JBsDiffTool.BsApllyPatchTask task = new JBsDiffTool.BsApllyPatchTask();
+        task.id = (int) info.mId;
+        task.newMd5 = (TextUtils.isEmpty(mPatch.patchInfo.target_md5) ? mUpdateData.md5 : mPatch.patchInfo.target_md5);
+        task.newPath = DownloadHelper.getDownloadFolder(DEFAULT_FOLDER) + "/" + DEFAULT_APK_PREFIX + mUpdateData.version + DEFAULT_APK_SUFFIX;
+        task.oldMd5 = mPatch.patchInfo.apk_md5;
+        task.oldPath = mPatch.path;
+        task.patchMd5 = mPatch.patchInfo.patch_md5;
+        task.patchPath = info.mHint.length() > 7 && info.mHint.startsWith("file://") ? info.mHint.substring(7) :
+                JStringUtils.combineStr(DownloadHelper.getDownloadFolder(DEFAULT_FOLDER),
+                        "/", DEFAULT_PATCH_NAME, mPatch.patchInfo.patch_version, "_", mUpdateData.version, DEFAULT_PATCH_SUFFIX);
+
+        UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Apply, UpdateEvent.Apply_Start);
+        JBsDiffTool.applyPatch(task, new JBsDiffTool.BsApllyPatchCallback() {
+            @Override
+            public void onPatchResult(JBsDiffTool.BsApllyPatchTask task, JBsDiffTool.BsErrCode code) {
+                switch (code) {
+                    case BsErrCode_OK:
+                        stats(StatsConst.UPDATE_APPLY_SUCCESS, null);
+                        UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Apply, UpdateEvent.Apply_Success);
+                        setCurrentState(States.state(States.install));
+                        mCurrentState.handleEvent(UpdateModule.this, buildEvent(UpdateEvent.Event.install, task.newPath));
+                        break;
+                    default:
+                        UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Apply, UpdateEvent.Apply_Failed);
+                        idle(StatsConst.UPDATE_APPLY_FAILED, StatsConst.APPLY_ERROR + code);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPatchProgress(JBsDiffTool.BsApllyPatchTask task, JBsDiffTool.BsProgressPhase phase) {
+
+            }
+        });
+    }
 
     void installPackage(String path) {
         if (!TextUtils.isEmpty(path)) {
@@ -340,6 +474,53 @@ public class UpdateModule extends Module implements UpdateInterface {
         return data;
     }
 
+    private void onDownloadStarted(long id) {
+        mBinder.singleBindSourceTo("update_download", DownloadHelper.getDownloadInfo(id));
+    }
+
+    private void onDownloadSuccess(DownloadSetup.JDownloadInfo info) {
+        mBinder.clearAllKvoConnections();
+
+        if (null == info) {
+            UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Download, UpdateEvent.DownloadUpdate_Failed);
+            idle(StatsConst.UPDATE_DOWNLOAD_FAILED, StatsConst.DOWNLOAD_FAILED_CODE + "null_info");
+            return;
+        }
+
+        stats(StatsConst.UPDATE_DOWNLOAD_SUCCESS, "");
+        setCurrentState(States.state(States.apply));
+        mCurrentState.handleEvent(this, buildEvent(UpdateEvent.Event.apply, info));
+    }
+
+    private void onDownloadError(DownloadSetup.JDownloadInfo info) {
+        mBinder.clearAllKvoConnections();
+        UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Download, UpdateEvent.DownloadUpdate_Failed);
+        DownloadHelper.removeDownloadTask(info.mId);
+        idle(StatsConst.UPDATE_DOWNLOAD_FAILED, StatsConst.DOWNLOAD_FAILED_CODE + info.mStatus);
+    }
+
+    @KvoAnnotation(name = DownloadSetup.JDownloadInfo.Kvo_status, targetClass = DownloadSetup.JDownloadInfo.class, thread = ThreadBus.Working)
+    public void onDownloadStateChanged(Kvo.KvoEvent event) {
+        int status = event.caseNewValue(Integer.class, 0);
+        switch (status) {
+            case Downloads.STATUS_PENDING:
+                break;
+            case Downloads.STATUS_RUNNING:
+                UpdateEvent.notifyEvent(this, UpdateEvent.UpdateEvent_Download, UpdateEvent.DownloadUpdate_Started);
+                break;
+            case Downloads.STATUS_SUCCESS:
+            case Downloads.STATUS_FILE_ALREADY_EXISTS_ERROR:
+                onDownloadSuccess(DownloadSetup.JDownloadInfo.class.cast(event.from));
+                DModule.ModuleDownload.cast(DownloadInterface.class).tryStopSyncList();
+                break;
+            default:
+                if (Downloads.isStatusError(status) || status == Downloads.STATUS_WAITING_TO_RETRY) {
+                    onDownloadError(DownloadSetup.JDownloadInfo.class.cast(event.from));
+                    DModule.ModuleDownload.cast(DownloadInterface.class).tryStopSyncList();
+                }
+                break;
+        }
+    }
 
     private void stats(String eid, String label) {
         JLog.warn(this, "UpdateModule stats " + eid + "; " + (null != label ? label : ""));

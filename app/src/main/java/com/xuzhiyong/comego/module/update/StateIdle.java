@@ -20,7 +20,7 @@ class StateIdle implements IState {
                 update.checkUpdate(eventArg.arg0(Boolean.class));
                 break;
             case full_download:
-//                update.downloadApk(eventArg.arg0(String.class));
+                update.downloadApk(eventArg.arg0(String.class));
                 break;
             default:
                 break;
