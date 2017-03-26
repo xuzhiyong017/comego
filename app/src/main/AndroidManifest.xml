@@ -97,7 +97,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"></activity>
-        <activity android:name=".module.Login.LoginActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity"></activity>
 
 
         <service

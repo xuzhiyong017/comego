@@ -135,22 +135,16 @@ public class NetHelper {
 	}
 
 	public static void sendProto(Proto proto) {
-		DModule.ModuleNet.cast(NetModule.class).sendProto(proto);
+		DModule.ModuleNet.cast(NetInterface.class).sendProto(proto);
+	}
+
+	public static void sendProtoWithToken(Proto proto){
+		DModule.ModuleNet.cast(NetInterface.class).sendProtoWithToken(proto);
 	}
 
     public static boolean isWifi(){
         return JNetworkUtil.isWifiActive();
     }
 
-    public static void startHeartBeat() {
-        DModule.ModuleNet.cast(NetInterface.class).startHeartBeat();
-    }
 
-    public static void stopHeartBeat() {
-        DModule.ModuleNet.cast(NetInterface.class).stopHeartBeat();
-    }
-
-    public static void sendHeartBeat() {
-        DModule.ModuleNet.cast(NetInterface.class).sendHeartBeat();
-    }
 }

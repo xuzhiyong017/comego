@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_gcustom_progress"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="16dp">
+
+    <ImageView
+        android:id="@+id/dgp_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/empty_str"
+        android:src="@drawable/gcustom_progress_anim" />
+
+    <TextView
+        android:id="@+id/dgp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxWidth="200dp"
+        android:textColor="#9e9e9e"
+        android:textSize="15sp"/>
+
+</LinearLayout>

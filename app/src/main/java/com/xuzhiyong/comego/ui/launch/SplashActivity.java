@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.xuzhiyong.comego.R;
-import com.xuzhiyong.comego.module.Login.LoginActivity;
+import com.xuzhiyong.comego.ui.login.LoginActivity;
 import com.xuzhiyong.comego.ui.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity {

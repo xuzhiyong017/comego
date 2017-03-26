@@ -10,15 +10,15 @@ public class BaseContext {
 	public static Application gContext = null;
 	
 	/// start the app, then set company name
-	public static String gCompanyName = "duowan";
+	public static String gCompanyName = "xuzhiyong";
 	/// start the app, then set the app name
-	public static String gAppName = "ada";
+	public static String gAppName = "comego";
 	/// start the app, then set the signature
 	public static String gAppSignature = "1.0.0";
 	/// start the app, then set the usr key whenever a user is applyed
 	public static String gUsrKey = "0";
 	/// start the app, then set the report platform
-	public static String gPlatform = "android_ada";
+	public static String gPlatform = "android_comego";
 	/// start the app, when logined set the uid
 	public static long gUid = 0;
 	

@@ -4,6 +4,7 @@ import com.duowan.fw.ThreadBus;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JUtils;
 import com.squareup.wire.ProtoEnum;
+import com.xuzhiyong.comego.module.DModule;
 
 import java.lang.ref.WeakReference;
 
@@ -15,7 +16,9 @@ public class NetRequest implements Runnable{
 	
 	/// request thread
 	private static final int sRequestThread = ThreadBus.gen();
-	
+	public static final int FLAG_WITH_COOKIE = 0x01;
+	public static final int FLAG_WITH_TOKEN = 0x02;
+	public static final int FLAG_SEND = 0x03;
 	/// static block
 	static{
 		ThreadBus.bus().addThread(sRequestThread, "net-request-thread");
@@ -32,6 +35,8 @@ public class NetRequest implements Runnable{
 	private Proto 				mProto;
 	// net sequence, every same proto uri must not have same seq, resverd seq 0 for internal protocol
 	private int 				mSeq = -1;
+
+	private int mFlag = FLAG_SEND;
 	
 	public NetRequest(ProtoEnum group, ProtoEnum reqSub, ProtoBody message){
 		mGroup = group.getValue();
@@ -87,7 +92,12 @@ public class NetRequest implements Runnable{
 		mProto = proto;
 		return this;
 	}
-	
+
+	public NetRequest setFlag(int flag){
+		mFlag = flag;
+		return this;
+	}
+
 	public  NetRequest request(){
 		return request(null);
 	}
@@ -143,7 +153,7 @@ public class NetRequest implements Runnable{
 			}
 		}
 
-		NetHelper.sendProto(mProto);
+		sendProto(mProto);
 		if (trackNetRequestLog) {
 			// we did not receive the respond yet, but the max seq is coming
 			JLog.info(this, String.format("[NetDataChannel][NetRequest] send a proto(%s) with seq(%d) local seq(%d)",
@@ -160,6 +170,23 @@ public class NetRequest implements Runnable{
             ThreadBus.bus().postDelayed(ThreadBus.Main, mDelayRunnable, mTimeOut);
 		}
 	}
+
+
+	private void sendProto(Proto proto) {
+		switch (mFlag) {
+			case FLAG_WITH_COOKIE:
+			case FLAG_WITH_TOKEN:
+				NetHelper.sendProtoWithToken(proto);
+				break;
+			case FLAG_SEND:
+				NetHelper.sendProto(proto);
+				break;
+			default:
+				NetHelper.sendProto(proto);
+				break;
+		}
+	}
+
 
 	public static final String RespondMethod = "onRespond";
     @DNetAnnoation(group = 0, sub = 0)// make the method not mix by proguard

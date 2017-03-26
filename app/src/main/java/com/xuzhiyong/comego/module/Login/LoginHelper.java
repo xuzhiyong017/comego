@@ -1,18 +1,25 @@
 package com.xuzhiyong.comego.module.Login;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.duowan.fw.util.JLog;
 import com.xuzhiyong.comego.module.DConst;
 import com.xuzhiyong.comego.module.DData;
 import com.xuzhiyong.comego.module.DModule;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 
 
 public class LoginHelper {
 
     public static final long LOGIN_TIMEOUT_DURATION = 35000L;
+    private static final String TAG = LoginHelper.class.getSimpleName();
 
     public static long getUid() {
         LoginModuleData loginData = (LoginModuleData) (DData.loginModuleData.data());
@@ -34,6 +41,10 @@ public class LoginHelper {
     // is online
     public static boolean isOnLine() {
         return loginState() == LoginModuleData.LoginState.Login_Online.ordinal();
+    }
+
+    public static boolean isLoginIng(){
+        return loginState() == LoginModuleData.LoginState.Login_Ing.ordinal();
     }
 
     public static boolean canAutoLogin() {
@@ -104,6 +115,58 @@ public class LoginHelper {
 //        void onError(UiError error);
         void onCancel();
     }
+
+
+    public static void loginWithQQ(final Platform mQQPlatform, final LoginWithQQResultListener listener){
+
+        final JLoginData loginData = setNewLoginData(JLoginData.qqLoginData());
+
+        mQQPlatform.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                JLog.info(TAG, "---- onComplete="+platform.getName());
+                initQQloginData(mQQPlatform,loginData);
+
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+                JLog.info(TAG, "---- onCancel" + platform.toString());
+
+                if(null != mQQPlatform){
+                    mQQPlatform.removeAccount(true);
+                }
+            }
+        });
+
+        if(!mQQPlatform.isValid()){
+            mQQPlatform.authorize();
+        }else{
+            initQQloginData(mQQPlatform,loginData);
+        }
+    }
+
+    private static void initQQloginData(Platform mQQPlatform,JLoginData loginData) {
+        String accessToken = mQQPlatform.getDb().getToken();
+        String openId = mQQPlatform.getDb().getUserId();
+
+        loginData.setValue(JLoginData.Kvo_qqOpenId, openId);
+        loginData.setValue(JLoginData.Kvo_qqAccessToken, accessToken);
+
+        String userName  = mQQPlatform.getDb().getUserName();
+
+        loginData.setValue(JLoginData.Kvo_userName, userName);
+
+        login();
+    }
+
+
 // FIXME: 16-10-25
 //    public static void loginWithQQ(final Tencent tencent, final Activity act, final LoginWithQQResultListener listener) {
 //

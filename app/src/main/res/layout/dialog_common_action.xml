@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp">
+
+    <TextView
+        android:id="@+id/dialog_common_action_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/bg_common"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/text_normal"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/dialog_common_action_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_common"/>
+
+    <TextView
+        android:id="@+id/dialog_common_action_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/dialog_gray"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/text_normal"
+        android:textSize="16sp"
+        android:clickable="true"/>
+
+</LinearLayout>

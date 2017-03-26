@@ -23,4 +23,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="switch_env_test">切换到测试环境</string>
+    <string name="switch_env_official">切换到正式环境</string>
+    <string name="cancel">取消</string>
+    <string name="alert_confirm">确定</string>
+    <string name="show_input_limit_tips" formatted="false">最多输入%d个字</string>
+    <string name="confirm">确定</string>
+    <string name="logining">登录中</string>
+    <string name="exception_local_code_login_failed">登录异常</string>
+    <string name="login_timeout_retry">登录超时请重试</string>
 </resources>

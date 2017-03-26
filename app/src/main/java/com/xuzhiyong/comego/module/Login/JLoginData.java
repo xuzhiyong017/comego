@@ -4,6 +4,7 @@ import com.duowan.fw.kvo.Kvo.KvoSource;
 import com.duowan.fw.kvo.KvoAnnotation;
 import com.duowan.fw.util.JStringUtils;
 
+import protocol.LoginBy;
 import protocol.Result;
 
 /**

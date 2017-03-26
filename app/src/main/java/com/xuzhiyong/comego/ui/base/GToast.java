@@ -12,8 +12,10 @@ import android.widget.Toast;
 import com.duowan.fw.ThreadBus;
 import com.duowan.fw.root.BaseContext;
 import com.duowan.fw.util.JThreadUtil;
+import com.xuzhiyong.comego.R;
 import com.xuzhiyong.comego.module.DModule;
 import com.xuzhiyong.comego.module.app.AppInterface;
+import com.xuzhiyong.comego.widget.TopTipsView;
 
 import java.lang.reflect.Method;
 
@@ -22,7 +24,7 @@ import java.lang.reflect.Method;
 public class GToast {
     // FIXME: 16-10-25
     private static Toast msToast;
-//    private static TopTipsView msContent;
+    private static TopTipsView msContent;
 
 	private static long DURATION = 1500L;
 
@@ -101,18 +103,18 @@ public class GToast {
 		reflectionsetFullScreen();
 		msToast.setDuration(Toast.LENGTH_LONG);
         msToast.show();
-//        msContent.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                msContent.show(text.toString(), duration);
-//            }
-//        }, 200L);
+        msContent.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                msContent.show(text.toString(), duration);
+            }
+        }, 200L);
     }
 
 	private static void createToast() {
 		msToast = new Toast(BaseContext.gContext);
-//        msToast.setView(createToastView(R.layout.view_gtoast));
-//        msContent = (TopTipsView) msToast.getView().findViewById(R.id.toast_content);
+        msToast.setView(createToastView(R.layout.view_gtoast));
+        msContent = (TopTipsView) msToast.getView().findViewById(R.id.toast_content);
 	}
 
 	private static View createToastView(int layoutId) {

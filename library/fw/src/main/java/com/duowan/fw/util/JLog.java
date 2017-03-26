@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * (3) Support no mutex thread log
  * */
 public class JLog {
-    public static final String TAG = "duowan-ada";
+    public static final String TAG = "xuzhiyong-comego";
 
     // global log module
     public static final JLogModule KProfile;

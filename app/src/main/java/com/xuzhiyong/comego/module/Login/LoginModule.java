@@ -1,6 +1,5 @@
 package com.xuzhiyong.comego.module.Login;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -21,33 +20,31 @@ import com.duowan.fw.root.BaseContext;
 import com.duowan.fw.util.JConfig;
 import com.duowan.fw.util.JLog;
 import com.duowan.fw.util.JNetworkUtil;
+import com.duowan.fw.util.JStringUtils;
 import com.duowan.fw.util.JUtils;
 
 import com.google.gson.Gson;
 import com.xuzhiyong.comego.module.AdaConfig;
+import com.xuzhiyong.comego.module.DConst;
 import com.xuzhiyong.comego.module.DData;
 import com.xuzhiyong.comego.module.DEvent;
-import com.xuzhiyong.comego.module.DKeepMeRunnable;
 import com.xuzhiyong.comego.module.DModule;
 import com.xuzhiyong.comego.module.Ln;
 import com.xuzhiyong.comego.module.app.AppInterface;
 import com.xuzhiyong.comego.module.datacenter.tables.JLoginHistoryItem;
-import com.xuzhiyong.comego.module.net.NetClient;
-import com.xuzhiyong.comego.module.net.NetHelper;
 import com.xuzhiyong.comego.module.Login.LoginModuleData.LoginState;
+import com.xuzhiyong.comego.module.net.NetHelper;
 import com.xuzhiyong.comego.module.net.NetInterface;
+import com.xuzhiyong.comego.module.net.NetModule;
 import com.xuzhiyong.comego.module.net.Proto;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import protocol.ErrCode;
+import protocol.LoginBy;
+import protocol.PType;
+import protocol.SPLogin;
+import protocol.UserLoginReq;
 
 
 public class LoginModule extends Module implements LoginInterface {
@@ -70,8 +67,8 @@ public class LoginModule extends Module implements LoginInterface {
 	public LoginModule() {
 		mData = new LoginModuleData();
 		DData.loginModuleData.link(this, mData);
-		mLog = NetClient.KNet; //JLog.KDefault;
-		LoginTask.sLog = NetClient.KNet;
+		mLog = NetModule.KNet; //JLog.KDefault;
+		LoginTask.sLog = NetModule.KNet;
 
 		DEvent.autoBindingEvent(this);
 
@@ -227,32 +224,32 @@ public class LoginModule extends Module implements LoginInterface {
 			return;
 		}
 
-//		UserLoginReq.Builder loginRequesBuilder = UserLoginReq.newBuilder();
-//
-//		loginRequesBuilder.loginBy(loginData.loginBy)
-//				.macid(mData.macAddress)
-//				.finger(getDeviceFingerStr())
-//				.osinfo(VERSION.CODENAME + ":" + VERSION.SDK_INT)
-//				.devtype("android:" + mData.device)
-//				.protoVersion(protocol.ProtoVersion.ProtoVersion_Current)
-//				.identifyingCode(JStringUtils.combineStr(loginData.qqOpenId,
-//						"#", loginData.qqAccessToken)).build();
-//
-//		// channel id: from
-//		if (DConst.sChannelID != null) {
-//			loginRequesBuilder.fromStore(DConst.sChannelID);
-//		}
-//
-//		loginRequesBuilder.newsession(strongNewSession);
-//
-//		UserLoginReq loginRequest = loginRequesBuilder.build();
-//		Proto proto = NetHelper.buildProto(PType.PLogin,
-//				SPLogin.PUserLoginReq,
-//				NetHelper.pbb().userLoginReq(loginRequest).build());
-//
-//		mData.setValue(LoginModuleData.Kvo_loginState, LoginModuleData.LoginState.Login_Ing);
-//
-//		LoginTask.startNewLoginTask(proto);
+		UserLoginReq.Builder loginRequesBuilder = UserLoginReq.newBuilder();
+
+		loginRequesBuilder.loginBy(loginData.loginBy)
+				.macid(mData.macAddress)
+				.finger(getDeviceFingerStr())
+				.osinfo(VERSION.CODENAME + ":" + VERSION.SDK_INT)
+				.devtype("android:" + mData.device)
+				.protoVersion(protocol.ProtoVersion.ProtoVersion_Current)
+				.identifyingCode(JStringUtils.combineStr(loginData.qqOpenId,
+						"#", loginData.qqAccessToken)).build();
+
+		// channel id: from
+		if (DConst.sChannelID != null) {
+			loginRequesBuilder.fromStore(DConst.sChannelID);
+		}
+
+		loginRequesBuilder.newsession(strongNewSession);
+
+		UserLoginReq loginRequest = loginRequesBuilder.build();
+		Proto proto = NetHelper.buildProto(PType.PLogin,
+				SPLogin.PUserLoginReq,
+				NetHelper.pbb().userLoginReq(loginRequest).build());
+
+		mData.setValue(LoginModuleData.Kvo_loginState, LoginModuleData.LoginState.Login_Ing);
+
+		LoginTask.startNewLoginTask(proto);
 	}
 
 	@Override
@@ -338,8 +335,6 @@ public class LoginModule extends Module implements LoginInterface {
 		sendLogoutReq();
 
         DModule.ModuleApp.cast(AppInterface.class).onLogout();
-
-		DModule.ModuleNet.cast(NetInterface.class).clearClient();
 
 		// clear data
 		mData.setValue(LoginModuleData.Kvo_currentLoginData, JLoginData.emptyLoginData());
@@ -538,15 +533,15 @@ public class LoginModule extends Module implements LoginInterface {
 			Ln.doDealWithException(this, null, result, null, null);
 		}
 
-		if (result == NetClient.LocalErrCode_LoginFailed) {
-			reloginInternal();
-		} else {
-			JLog.info(mLog, "Login Failed: %d", result);
-
-			if (needLogoutWhenLoginFailed(result)) {
-				logout(true);
-			}
-		}
+//		if (result == NetClient.LocalErrCode_LoginFailed) {
+//			reloginInternal();
+//		} else {
+//			JLog.info(mLog, "Login Failed: %d", result);
+//
+//			if (needLogoutWhenLoginFailed(result)) {
+//				logout(true);
+//			}
+//		}
 	}
 
 	@Override

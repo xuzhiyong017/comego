@@ -81,89 +81,14 @@ public class DEvent {
 
 	public static final String E_UserChange = "E_UserChange";
 
-	public static final String E_UserChange_After = "E_UserChange_After";
+	public static final String Event_SwitchEnvTest = "SwitchEnvTest";
 
-	public static final String E_EmptyUserInfo = "E_EmptyUserInfo";
-
-	public static final String E_SessionChange = "E_SessionChange";
-
-	public static final String E_HandleErrCode = "E_HandleErrCode";
-
-	//TexasHoldemModule
-	public static final String E_OnTexasGameSeatPush = "E_OnTexasGameSeatPush";
-	public static final String E_OnTexasQueuePush = "E_OnTexasQueuePush";
-
-	public static final String E_OnTexasJoinFailedOtherRoom = "E_OnTexasJoinFailedOtherRoom";
-
-	public static final String E_OnTexasQueueEnterSuc = "E_OnTexasQueueEnterSuc";
-
-    public static final String E_ChipsNotEnough = "E_ChipsNotEnough";
-
-	public static final String E_LiveRoomEnterGroupFailed = "E_LiveRoomEnterGroupFailed";
-	public static final String E_LiveRoomLoginYCloudFailed = "E_LiveRoomLoginYCloudFailed";
-	public static final String E_LiveRoomLoginYCloudSuc = "E_LiveRoomLoginYCloudSuc";
-
-	public static final String E_OnQuitLiveRoom = "E_OnQuitLiveRoom";
-
-    public static final String E_ReportVideo = "E_ReportVideo";
-
-	/**
-	 *  开启摄像头失败
-	 */
-    public static final String E_OpenCameraFailed = "E_OpenCameraFailed";
+	public static final String Event_SwitchEnvOfficial = "SwitchEnvOfficial";
 
 
-    /**
-     * 自己destroy自己的直播间
-     */
-	public static final String E_OnDestroyLiveRoom = "E_OnDestroyLiveRoom";
-    /**
-     * 直播间被destroy了
-     */
-    public static final String E_OnLiveRoomDestroyed = "E_OnLiveRoomDestroyed";
 
-    public static final String E_GiftDialogShow = "E_GiftDialogShow";
 
-	public static final String E_GiftListBeatHeart= "E_GiftListBeatHeart";
 
-    public static final String E_GiftDialogDismiss = "E_GiftDialogDismiss";
-
-	public static final String E_OnCameraPreviewCreated = "E_OnCameraPreviewCreated";
-
-	public static final String E_OnCameraPreviewStopped = "E_OnCameraPreviewStopped";
-
-    public static final String E_OnTexasResult = "E_OnTexasResult";
-
-	public static final String E_OnVideoStreamArrived = "E_OnVideoStreamArrived";
-
-	//group message
-	public static final String E_GroupMessage_SendingResult = "E_GroupMessage_SendingResult";
-
-    public static final String E_giftMsg_Arrived = "E_giftMsg_Arrived";
-
-    public static final String E_OnRedPacket = "E_OnRedPacket";
-
-    public static final String E_OnGiftSketchMsg = "E_OnGiftSketchMsg";
-
-    public static final String E_OnValuableGiftMsg = "E_OnValuableGiftMsg";
-
-	// user startLive
-	public static final String E_UserStartLive = "E_UserStartLive";
-
-	//top notify
-	public static final String E_UserPrompt = "E_UserPrompt";
-
-	public static final String E_CloseAnimSet = "E_close_animSet";
-
-    public static final String E_OnUserNotice = "E_OnUserNotice";
-
-    public static final String E_OnWithdrawCashAccountBind = "E_OnWithdrawCashAccountBind";
-
-	public static final String E_OnTexasQueueUpdate = "E_OnTexasQueueUpdate";
-
-    public static final String E_FinishActivity = "E_FinishActivity";
-
-    public static final String E_ERR_GroupNotExist = "E_ERR_GroupNotExist";
 
 	// auto binding all annotation events
 	public static final void autoBindingEvent(Object target) {

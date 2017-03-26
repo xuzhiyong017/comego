@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dip"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_gcustom_dialog"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="53dip" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.3dip"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/line_gcustom_dialog_horizontal" />
+
+        <View
+            android:id="@+id/dgs_vertical_line"
+            android:layout_width="0.33dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/line_gcustom_dialog_vertical" />
+
+        <TextView
+            android:id="@+id/dgcdu_left_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/dgs_vertical_line"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/dgcdu_right_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/dgs_vertical_line"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>
