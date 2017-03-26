@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 loginWithQQ();
                 break;
             case R.id.weixin_login:
-                Toast.makeText(LoginActivity.this,"登录成功0+"+ mQQPlatform.getDb().getUserId(),Toast.LENGTH_LONG).show();
+                GToast.show("微信登陆");
                 break;
         }
     }
