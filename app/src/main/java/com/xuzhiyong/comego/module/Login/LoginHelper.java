@@ -142,6 +142,10 @@ public class LoginHelper {
                 if(null != mQQPlatform){
                     mQQPlatform.removeAccount(true);
                 }
+
+                if(null != listener){
+                    listener.onCancel();
+                }
             }
         });
 

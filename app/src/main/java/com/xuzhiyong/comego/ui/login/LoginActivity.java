@@ -91,6 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void onCancel() {
                 loginFinish();
+                GToast.show(R.string.login_cancel);
             }
         });
         mLoginData = LoginHelper.curLoginData();

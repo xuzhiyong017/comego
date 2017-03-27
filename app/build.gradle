@@ -17,16 +17,85 @@ android {
         applicationId "com.xuzhiyong.comego"
         minSdkVersion 16
         targetSdkVersion 23
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            shrinkResources false
         }
     }
+
+    packagingOptions {
+
+        // unused Fresco native libs
+        exclude 'lib/mips/libbitmaps.so'
+        exclude 'lib/mips/libgifimage.so'
+        exclude 'lib/mips/libimagepipeline.so'
+        exclude 'lib/mips/libmemchunk.so'
+        exclude 'lib/mips/libwebp.so'
+        exclude 'lib/mips/libwebpimage.so'
+        exclude 'lib/mips/libstatic-webp.so'
+
+        exclude 'lib/x86/libbitmaps.so'
+        exclude 'lib/x86/libgifimage.so'
+        exclude 'lib/x86/libimagepipeline.so'
+        exclude 'lib/x86/libmemchunk.so'
+        exclude 'lib/x86/libwebp.so'
+        exclude 'lib/x86/libwebpimage.so'
+        exclude 'lib/x86/libstatic-webp.so'
+
+        exclude 'lib/x86_64/libbitmaps.so'
+        exclude 'lib/x86_64/libgifimage.so'
+        exclude 'lib/x86_64/libimagepipeline.so'
+        exclude 'lib/x86_64/libmemchunk.so'
+        exclude 'lib/x86_64/libwebp.so'
+        exclude 'lib/x86_64/libwebpimage.so'
+        exclude 'lib/x86_64/libstatic-webp.so'
+
+        exclude 'lib/armeabi/libbitmaps.so'
+        exclude 'lib/armeabi/libgifimage.so'
+        exclude 'lib/armeabi/libimagepipeline.so'
+        exclude 'lib/armeabi/libmemchunk.so'
+        exclude 'lib/armeabi/libwebp.so'
+        exclude 'lib/armeabi/libwebpimage.so'
+        exclude 'lib/armeabi/libstatic-webp.so'
+
+        exclude 'lib/arm64-v8a/libbitmaps.so'
+        exclude 'lib/arm64-v8a/libgifimage.so'
+        exclude 'lib/arm64-v8a/libimagepipeline.so'
+        exclude 'lib/arm64-v8a/libmemchunk.so'
+        exclude 'lib/arm64-v8a/libwebp.so'
+        exclude 'lib/arm64-v8a/libwebpimage.so'
+        exclude 'lib/arm64-v8a/libstatic-webp.so'
+
+        exclude 'lib/mips/libblasV8.so'
+        exclude 'lib/mips/librsjni.so'
+        exclude 'lib/mips/libRSSupport.so'
+        exclude 'lib/x86/libblasV8.so'
+        exclude 'lib/x86/librsjni.so'
+        exclude 'lib/x86/libRSSupport.so'
+        exclude 'lib/x86/libjbsdiff.so'
+        exclude 'lib/x86/libjenv.so'
+        exclude 'lib/x86/libjringbuffer.so'
+        exclude 'lib/x86/libjsmartradix.so'
+        exclude 'lib/x86/libliblocSDK6a.so'
+        exclude 'lib/x86/libt9search.so'
+    }
+
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 }
 
 dependencies {

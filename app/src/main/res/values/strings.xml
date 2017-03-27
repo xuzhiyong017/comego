@@ -30,6 +30,8 @@
     <string name="show_input_limit_tips" formatted="false">最多输入%d个字</string>
     <string name="confirm">确定</string>
     <string name="logining">登录中</string>
+    <string name="login_cancel">登录取消</string>
     <string name="exception_local_code_login_failed">登录异常</string>
     <string name="login_timeout_retry">登录超时请重试</string>
+    <string name="splash_countdown_time" formatted="false">%ds</string>
 </resources>
