@@ -28,4 +28,7 @@ public class DData {
 	/// update
 	public static final E_Data updateModuleData = new E_Data(DModule.ModuleUpdate);
 
+	/// bmob
+	public static final E_Data bmobModuleData = new E_Data(DModule.ModuleBmob);
+
 }

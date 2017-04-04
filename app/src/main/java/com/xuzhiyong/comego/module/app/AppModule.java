@@ -62,7 +62,7 @@ public class AppModule extends Module implements AppInterface {
         // notification center
 //        NotificationCenter.init();
 
-        initFresco();
+        initGlide();
 
         mStartupManager = new AppStartupManager();
 
@@ -76,7 +76,7 @@ public class AppModule extends Module implements AppInterface {
         }, 5000);
     }
 
-    private void initFresco() {
+    private void initGlide() {
         // FIXME: 16-10-25
 //        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(gMainContext, new OkHttpClient())
 //                .setDownsampleEnabled(true)

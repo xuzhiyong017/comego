@@ -6,6 +6,7 @@ import com.duowan.fw.Module;
 import com.duowan.fw.ModuleCenter;
 import com.duowan.fw.ThreadBus;
 import com.duowan.fw.util.JFileUtils;
+import com.xuzhiyong.comego.module.Bmob.BmobModule;
 import com.xuzhiyong.comego.module.DEvent;
 import com.xuzhiyong.comego.module.DModule;
 import com.xuzhiyong.comego.module.Login.LoginModule;
@@ -71,6 +72,8 @@ public class ComegoStartup {
         DModule.ModuleDownload.link(new DownloadModule());
 
         DModule.ModuleUpdate.link(new UpdateModule());
+
+        DModule.ModuleBmob.link(new BmobModule());
 
         ModuleCenter.sendEventTo(DEvent.E_AllModuleCreated);
 

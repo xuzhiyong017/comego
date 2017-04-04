@@ -28,4 +28,7 @@ public class DModule extends E_Module {
 	/// update
 	public static final E_Module ModuleUpdate = new E_Module(".update");
 
+	/// update
+	public static final E_Module ModuleBmob = new E_Module(".bmob");
+
 }

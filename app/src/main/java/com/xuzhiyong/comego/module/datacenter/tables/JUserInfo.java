@@ -7,7 +7,6 @@ import com.duowan.fw.kvo.databinding.JObservableLong;
 import com.duowan.fw.kvo.databinding.JObservableString;
 import com.duowan.fw.util.JConstCache;
 import com.duowan.fw.util.JLog;
-import com.xuzhiyong.comego.model.user.UserInfo;
 import com.xuzhiyong.comego.module.KvoAnnotationFlags;
 import com.xuzhiyong.comego.module.datacenter.DataCenterHelper;
 import com.xuzhiyong.comego.module.datacenter.JAppDb;
@@ -21,6 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import protocol.UserInfo;
 
 
 public class JUserInfo extends KvoSource {

@@ -25,6 +25,7 @@ import com.xuzhiyong.comego.module.Login.LoginModuleData;
 import com.xuzhiyong.comego.ui.base.BaseActivity;
 import com.xuzhiyong.comego.ui.base.GToast;
 import com.xuzhiyong.comego.ui.main.MainActivity;
+import com.xuzhiyong.comego.ui.utils.ActivityUtils;
 
 import org.json.JSONObject;
 
@@ -76,7 +77,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 loginWithQQ();
                 break;
             case R.id.weixin_login:
-                GToast.show("微信登陆");
+//                GToast.show("微信登陆");
+                ActivityUtils.jump(ActivityUtils.ActivityJumpParams.build(this,MainActivity.class));
                 break;
         }
     }
