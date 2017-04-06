@@ -55,8 +55,6 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         mRecyclerView = getView(R.id.list);
         mDataAdapter = new DataAdapter(this);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);

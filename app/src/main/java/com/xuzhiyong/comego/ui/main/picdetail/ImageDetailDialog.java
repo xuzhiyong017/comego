@@ -51,7 +51,7 @@ public class ImageDetailDialog extends Dialog {
         setContentView(R.layout.dialog_image_detail);
         mViewPager = UIHelper.getView(this,R.id.image_detail_viewpager);
         mIndicator = UIHelper.getView(this,R.id.magic_indicator);
-        mAdapter = new InnerPagerAdapter();
+        mAdapter = new InnerPagerAdapter(getContext());
         mViewPager.setAdapter(mAdapter);
 
         bindData();
@@ -59,10 +59,7 @@ public class ImageDetailDialog extends Dialog {
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if(null != mBinder){
-                    mBinder.clearAllKvoConnections();
-                    mBinder = null;
-                }
+               release();
             }
         });
 
@@ -72,7 +69,7 @@ public class ImageDetailDialog extends Dialog {
                 dismiss();
             }
         });
-
+        mAdapter.setDataList(null);
     }
 
     private void initIndicator(int size) {
@@ -107,6 +104,14 @@ public class ImageDetailDialog extends Dialog {
     }
 
 
+    void release(){
+        mAdapter.setDataList(null);
+        mAdapter = null;
+        if(null != mBinder){
+            mBinder.clearAllKvoConnections();
+            mBinder = null;
+        }
+    }
 
 
 }
