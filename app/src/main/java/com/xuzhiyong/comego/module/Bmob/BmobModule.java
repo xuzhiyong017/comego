@@ -2,16 +2,17 @@ package com.xuzhiyong.comego.module.Bmob;
 
 import com.duowan.fw.Module;
 import com.duowan.fw.util.JLog;
-import com.mozillaonline.providers.downloads.Constants;
 import com.xuzhiyong.comego.bean.PictureInfo;
 import com.xuzhiyong.comego.module.DConst;
 import com.xuzhiyong.comego.module.DData;
+
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobQuery.CachePolicy;
 import cn.bmob.v3.datatype.BmobQueryResult;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.SQLQueryListener;
 
 /**
@@ -32,7 +33,7 @@ public class BmobModule extends Module implements BmobInterface{
 
     @Override
     public void getFirstPagePictures(final Integer index) {
-        String sql = "select * from PictureInfo where isCover=1 limit 0,?";
+        String sql = "select * from PictureInfo where isCover=1 limit ?,?";
         BmobQuery<PictureInfo> query = new BmobQuery<>();
         query.clearCachedResult(PictureInfo.class);
         query.doSQLQuery(sql,new SQLQueryListener<PictureInfo>(){
@@ -46,7 +47,7 @@ public class BmobModule extends Module implements BmobInterface{
                     JLog.info("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
                 }
             }
-        }, DConst.KC_PageCount);
+        },index,DConst.KC_PageCount);
     }
 
     @Override
@@ -104,11 +105,30 @@ public class BmobModule extends Module implements BmobInterface{
             public void done(BmobQueryResult<PictureInfo> result, BmobException e) {
                 if(e ==null){
                     JLog.info("smile", "查询到："+result.getResults().size()+"符合条件的数据");
-                    mData.girlsList.combineResult(mData.newestList.curIndex(),result.getResults());
+                    mData.girlsList.combineResult(mData.girlsList.curIndex(),result.getResults());
                 }else{
                     JLog.info("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
                 }
             }
-        },girlsId,mData.newestList.curIndex(),DConst.KC_PageCount);
+        },girlsId,mData.girlsList.curIndex(),DConst.KC_PageCount);
+    }
+
+    @Override
+    public void clearGirlsData() {
+        mData.girlsList.clear();
+    }
+
+    @Override
+    public void getGirlsCount(Integer girlsId, final CountResponseListener listener) {
+        BmobQuery<PictureInfo> query = new BmobQuery<>();
+        query.addWhereEqualTo("pictureGirlsId",girlsId);
+        query.count(PictureInfo.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                if(null != listener){
+                    listener.onResponse(integer);
+                }
+            }
+        });
     }
 }

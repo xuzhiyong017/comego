@@ -24,6 +24,7 @@ import com.xuzhiyong.comego.module.Bmob.BmobModuleData;
 import com.xuzhiyong.comego.module.DConst;
 import com.xuzhiyong.comego.module.DData;
 import com.xuzhiyong.comego.module.DModule;
+import com.xuzhiyong.comego.module.DSetting;
 import com.xuzhiyong.comego.ui.base.BaseActivity;
 import com.xuzhiyong.comego.ui.main.picdetail.ImageDetailDialog;
 
@@ -96,13 +97,19 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 mImageDetailDialog = new ImageDetailDialog(MainActivity.this,mDataAdapter.getDataList().get(position).getPictureGirlsId());
                 mImageDetailDialog.show();
+                int index = DSetting.getSettingValue(DSetting.Kvo_home_page_list_index,0);
+                if(index > position) return;
+                DSetting.setSettingValue(DSetting.Kvo_home_page_list_index,position);
             }
         });
     }
 
-    private void bindData() {
+    private void bindData() { 
         mBinder.singleBindSourceToClassObj(DData.bmobModuleData.data());
-        DModule.ModuleBmob.cast(BmobInterface.class).getFirstPagePictures(0);
+
+        int index = DSetting.getSettingValue(DSetting.Kvo_home_page_list_index,0);
+
+        DModule.ModuleBmob.cast(BmobInterface.class).getFirstPagePictures(index);
     }
 
     private void requestData() {

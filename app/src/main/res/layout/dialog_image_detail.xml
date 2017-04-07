@@ -10,12 +10,27 @@
 
     </android.support.v4.view.ViewPager>
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/image_current_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="1"/>
+        <TextView
+            android:id="@+id/image_totals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/10"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/image_current_position"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

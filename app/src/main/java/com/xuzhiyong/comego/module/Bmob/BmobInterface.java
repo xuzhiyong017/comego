@@ -13,5 +13,10 @@ public interface BmobInterface {
 
 
     void getFirstGirlsPages(Integer girlsId);
+
     void getNextGirlsPages(Integer girlsId,Integer limit);
+
+    void clearGirlsData();
+
+    void getGirlsCount(Integer girlsId, CountResponseListener listener);
 }

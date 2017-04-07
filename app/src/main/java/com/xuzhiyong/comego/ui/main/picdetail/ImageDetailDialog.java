@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.duowan.fw.ThreadBus;
 import com.duowan.fw.kvo.Kvo;
@@ -16,13 +17,12 @@ import com.xuzhiyong.comego.R;
 import com.xuzhiyong.comego.bean.PictureInfo;
 import com.xuzhiyong.comego.module.Bmob.BmobInterface;
 import com.xuzhiyong.comego.module.Bmob.BmobModuleData;
+import com.xuzhiyong.comego.module.Bmob.CountResponseListener;
+import com.xuzhiyong.comego.module.DConst;
 import com.xuzhiyong.comego.module.DData;
 import com.xuzhiyong.comego.module.DModule;
 import com.xuzhiyong.comego.ui.utils.UIHelper;
 
-import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 import java.util.List;
 
 /**
@@ -32,14 +32,13 @@ import java.util.List;
 public class ImageDetailDialog extends Dialog {
 
     private ViewPager mViewPager;
-    private MagicIndicator mIndicator;
+    private TextView mCurrent;
+    private TextView mTotals;
     private InnerPagerAdapter mAdapter;
-
     private KvoBinder mBinder = new KvoBinder(this);
-
-
-    private int size = 0;
     private int girlsId;
+    private Integer curPosition = 1;
+    private Integer mTotalNum = 0;
 
     public ImageDetailDialog(Context context,Integer girlsId) {
         super(context,R.style.gc_style_fulldialog);
@@ -50,7 +49,8 @@ public class ImageDetailDialog extends Dialog {
     private void init() {
         setContentView(R.layout.dialog_image_detail);
         mViewPager = UIHelper.getView(this,R.id.image_detail_viewpager);
-        mIndicator = UIHelper.getView(this,R.id.magic_indicator);
+        mCurrent = UIHelper.getView(this,R.id.image_current_position);
+        mTotals = UIHelper.getView(this,R.id.image_totals);
         mAdapter = new InnerPagerAdapter(getContext());
         mViewPager.setAdapter(mAdapter);
 
@@ -69,27 +69,44 @@ public class ImageDetailDialog extends Dialog {
                 dismiss();
             }
         });
-        mAdapter.setDataList(null);
+
+        initViewPagerChange();
     }
 
-    private void initIndicator(int size) {
-        CircleNavigator circleNavigator = new CircleNavigator(getContext());
-        circleNavigator.setFollowTouch(false);
-        circleNavigator.setCircleCount(size);
-        circleNavigator.setCircleColor(Color.RED);
-        circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
+    private void initViewPagerChange() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(int index) {
-                mViewPager.setCurrentItem(index);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mCurrent.setText((position+1)+"");
+                if(position == mAdapter.getCount()-1 && mAdapter.getCount() < mTotalNum){
+                    DModule.ModuleBmob.cast(BmobInterface.class).getNextGirlsPages(girlsId, DConst.KC_PageCount);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
-        mIndicator.setNavigator(circleNavigator);
-        ViewPagerHelper.bind(mIndicator, mViewPager);
     }
+
 
     private void bindData() {
         mBinder.singleBindSourceToClassObj(DData.bmobModuleData.data());
         DModule.ModuleBmob.cast(BmobInterface.class).getFirstGirlsPages(girlsId);
+        DModule.ModuleBmob.cast(BmobInterface.class).getGirlsCount(girlsId, new CountResponseListener() {
+            @Override
+            public void onResponse(Integer count) {
+                mTotalNum = count;
+                mCurrent.setText(curPosition+"");
+                mTotals.setText("/"+count);
+            }
+        });
     }
 
 
@@ -97,16 +114,13 @@ public class ImageDetailDialog extends Dialog {
     public void onList(Kvo.KvoEvent event) {
         if (null != event.newValue) {
             List<PictureInfo> list = (JEndLessList<PictureInfo>) (event.newValue);
-            size = list.size();
-            initIndicator(size);
             mAdapter.setDataList(list);
         }
     }
 
 
     void release(){
-        mAdapter.setDataList(null);
-        mAdapter = null;
+        DModule.ModuleBmob.cast(BmobInterface.class).clearGirlsData();
         if(null != mBinder){
             mBinder.clearAllKvoConnections();
             mBinder = null;

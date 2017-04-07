@@ -256,9 +256,9 @@ public class DSetting extends Kvo.KvoSource {
     @KvoAnnotation(name = Kvo_room_game_sound)
     public int room_game_sound = 0;
 
-	public static final String Kvo_room_game_vibration = "room_game_vibration";
-    @KvoAnnotation(name = Kvo_room_game_vibration)
-    public int room_game_vibration = 0;
+	public static final String Kvo_home_page_list_index = "home_page_list_index";
+    @KvoAnnotation(name = Kvo_home_page_list_index)
+    public int home_page_list_index = 0;
 
 	private long mUid;
 	private SharedPreferences mSharedPreferences;
@@ -292,7 +292,7 @@ public class DSetting extends Kvo.KvoSource {
 		setValue(Kvo_sign_in_timestamp, 0L);
 		setValue(Kvo_task_todo_timestamp, 0L);
 		setValue(Kvo_room_game_sound, 0);
-		setValue(Kvo_room_game_vibration,0);
+		setValue(Kvo_home_page_list_index,0);
 	}
 
 	public Object getValue(String key, String keySuffix, Object defaultValue) {
